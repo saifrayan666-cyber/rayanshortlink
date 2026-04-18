@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>THIS PERSON IS BRAND</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#000;
+  color:white;
+  text-align:center;
+}
+
+h1{
+  margin-top:40px;
+  color:#00ffe5;
+  text-shadow:0 0 20px #00ffe5;
+}
+
+.subtitle{
+  color:#aaa;
+  margin-bottom:20px;
+}
+
+.box{
+  margin:30px auto;
+  padding:20px;
+  width:90%;
+  max-width:500px;
+  background:#111;
+  border-radius:15px;
+  box-shadow:0 0 15px #00ffe5;
+}
+
+input{
+  width:90%;
+  padding:12px;
+  margin:10px;
+  border:none;
+  border-radius:10px;
+}
+
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  background:#00ffe5;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#00c9b7;
+}
+
+.result{
+  margin-top:20px;
+  word-break:break-all;
+}
+
+.footer{
+  position:fixed;
+  bottom:10px;
+  width:100%;
+  color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<h1>THIS PERSON IS BRAND</h1>
+<div class="subtitle">Rayan Simple Link Shortener</div>
+
+<div class="box">
+<input id="longUrl" placeholder="Enter your long URL">
+<input id="custom" placeholder="Custom name (optional)">
+<br>
+<button onclick="shorten()">Create Link</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<div class="footer">
+Developed By THIS PERSON IS BRAND
+</div>
+
+<script>
+function shorten(){
+  let url = document.getElementById("longUrl").value.trim();
+  let custom = document.getElementById("custom").value.trim();
+
+  if(!url){
+    alert("Enter URL");
+    return;
+  }
+
+  // encode URL
+  let encoded = btoa(url);
+
+  // custom override
+  let id = custom || encoded;
+
+  let shortLink = location.origin + location.pathname + "#" + id;
+
+  document.getElementById("result").innerHTML =
+    "Short Link:<br><b>"+shortLink+"</b>";
+}
+
+// redirect system
+window.onload = function(){
+  let hash = location.hash.replace("#","");
+
+  if(hash){
+    try{
+      let decoded = atob(hash);
+      window.location.href = decoded;
+    }catch(e){
+      alert("Invalid Link");
+    }
+  }
+}
+</script>
+
+</body>
+</html>
