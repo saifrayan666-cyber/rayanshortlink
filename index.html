@@ -4,67 +4,153 @@
 <meta charset="UTF-8">
 <title>THIS PERSON IS BRAND</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
 body{
   margin:0;
   font-family:sans-serif;
-  background:#000;
+  background:linear-gradient(135deg,#000,#0a0f2c);
   color:white;
   text-align:center;
 }
 
+/* BRAND */
 h1{
   margin-top:40px;
-  color:#00ffe5;
-  text-shadow:0 0 20px #00ffe5;
+  font-size:38px;
+  background:linear-gradient(90deg,#00ffe5,#8a2be2);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 .subtitle{
   color:#aaa;
-  margin-bottom:20px;
+  margin-top:5px;
 }
 
+/* BOX */
 .box{
   margin:30px auto;
-  padding:20px;
+  padding:25px;
   width:90%;
-  max-width:500px;
+  max-width:600px;
   background:#111;
   border-radius:15px;
-  box-shadow:0 0 15px #00ffe5;
+  box-shadow:0 0 20px #00ffe5;
+  backdrop-filter: blur(10px);
 }
 
+/* INPUT */
 input{
   width:90%;
-  padding:12px;
+  padding:14px;
   margin:10px;
-  border:none;
   border-radius:10px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:linear-gradient(135deg,#0a0f2c,#111);
+  color:white;
+  outline:none;
+  transition:0.3s;
 }
 
+input::placeholder{
+  color:#aaa;
+}
+
+input:focus{
+  border:1px solid #00ffe5;
+  box-shadow:0 0 10px #00ffe5;
+}
+
+/* BUTTON */
 button{
   padding:12px 20px;
   border:none;
   border-radius:10px;
-  background:#00ffe5;
+  background:linear-gradient(90deg,#00ffe5,#8a2be2);
+  color:white;
   cursor:pointer;
-  font-weight:bold;
+  transition:0.3s;
 }
 
 button:hover{
-  background:#00c9b7;
+  transform:scale(1.05);
+  box-shadow:0 0 15px #00ffe5;
 }
 
-.result{
-  margin-top:20px;
-  word-break:break-all;
+/* POPUP */
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  background:#111;
+  padding:20px;
+  border-radius:15px;
+  display:none;
+  box-shadow:0 0 30px #00ffe5;
+  animation:pop 0.3s ease forwards;
 }
+
+@keyframes pop{
+  to{transform:translate(-50%,-50%) scale(1);}
+}
+
+.copybtn{
+  margin-top:10px;
+  background:#00ffe5;
+  color:black;
+}
+
+/* SOCIAL */
+.social{
+  margin-top:20px;
+}
+
+.social span{
+  display:inline-block;
+  margin:10px;
+  font-size:30px;
+  transition:0.3s;
+}
+
+.social span:hover{
+  transform:scale(1.3);
+}
+
+/* FEATURES */
+.features{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.card{
+  background:#111;
+  margin:10px;
+  padding:15px;
+  border-radius:10px;
+  width:200px;
+}
+
+/* SIDE BUTTON */
+.sidebtn{
+  position:fixed;
+  bottom:20px;
+  padding:10px;
+  background:#00ffe5;
+  color:black;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.left{left:10px;}
+.right{right:10px;}
 
 .footer{
-  position:fixed;
-  bottom:10px;
-  width:100%;
-  color:#777;
+  margin-top:40px;
+  color:#888;
 }
 </style>
 </head>
@@ -72,53 +158,105 @@ button:hover{
 <body>
 
 <h1>THIS PERSON IS BRAND</h1>
-<div class="subtitle">Rayan Simple Link Shortener</div>
+<div class="subtitle">Simple Link Shortener For Any Platform</div>
 
 <div class="box">
-<input id="longUrl" placeholder="Enter your long URL">
+<input id="url" placeholder="Enter URL">
 <input id="custom" placeholder="Custom name (optional)">
-<br>
-<button onclick="shorten()">Create Link</button>
+<button onclick="create()">Shorten Link</button>
+</div>
 
-<div class="result" id="result"></div>
+<!-- POPUP -->
+<div class="popup" id="popup">
+<h3>✅ Link Shortened!</h3>
+
+<div id="shortlink"></div>
+
+<button class="copybtn" onclick="copy()">Copy</button>
+<button onclick="reloadPage()">Reload</button>
+
+<div id="qrcode"></div>
+</div>
+
+<!-- SOCIAL -->
+<div class="box">
+<h3>Works On</h3>
+
+<div class="social">
+<span>📘</span>
+<span>▶️</span>
+<span>🌐</span>
+<span>📱</span>
+<span>💬</span>
+</div>
+
+<p>Works on Facebook, YouTube, Google, and all platforms.</p>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+<div class="card">⚡ Fast</div>
+<div class="card">🔗 Custom Links</div>
+<div class="card">📱 All Platforms</div>
+<div class="card">🔒 Secure</div>
+</div>
+
+<!-- ENGLISH -->
+<div class="box">
+<h3>ENGLISH</h3>
+<p>Shorten links, generate QR codes, and share anywhere easily.</p>
+</div>
+
+<!-- BANGLA -->
+<div class="box">
+<h3>বাংলা</h3>
+<p>লিংক ছোট করুন, QR কোড তৈরি করুন এবং যেকোনো জায়গায় শেয়ার করুন।</p>
 </div>
 
 <div class="footer">
 Developed By THIS PERSON IS BRAND
 </div>
 
+<div class="sidebtn left" onclick="window.open('https://t.me/thispersonisbrand537')">Admin</div>
+<div class="sidebtn right" onclick="window.open('https://t.me/onlykopzone5371')">Channel</div>
+
 <script>
-function shorten(){
-  let url = document.getElementById("longUrl").value.trim();
-  let custom = document.getElementById("custom").value.trim();
+function create(){
+  let url = document.getElementById("url").value;
+  let custom = document.getElementById("custom").value;
 
-  if(!url){
-    alert("Enter URL");
-    return;
-  }
+  if(!url) return alert("Enter URL");
 
-  // encode URL
+  let id = custom || Math.random().toString(36).substring(2,8);
+
   let encoded = btoa(url);
+  localStorage.setItem(id, encoded);
 
-  // custom override
-  let id = custom || encoded;
+  let short = location.origin + location.pathname + "#" + id;
 
-  let shortLink = location.origin + location.pathname + "#" + id;
+  document.getElementById("shortlink").innerText = short;
+  document.getElementById("popup").style.display="block";
 
-  document.getElementById("result").innerHTML =
-    "Short Link:<br><b>"+shortLink+"</b>";
+  document.getElementById("qrcode").innerHTML="";
+  new QRCode(document.getElementById("qrcode"), short);
 }
 
-// redirect system
-window.onload = function(){
-  let hash = location.hash.replace("#","");
+function copy(){
+  let text = document.getElementById("shortlink").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Copied!");
+}
 
-  if(hash){
-    try{
-      let decoded = atob(hash);
-      window.location.href = decoded;
-    }catch(e){
-      alert("Invalid Link");
+function reloadPage(){
+  location.reload();
+}
+
+window.onload = function(){
+  let id = location.hash.replace("#","");
+  if(id){
+    let encoded = localStorage.getItem(id);
+    if(encoded){
+      window.location.href = atob(encoded);
     }
   }
 }
